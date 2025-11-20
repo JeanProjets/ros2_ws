@@ -4,28 +4,28 @@ robots:
   cf1:
     enabled: true
     uri: radio://0/80/2M/E7E7E7E701
-    initial_position: [2.5, 2.5, 0.0]
+    initial_position: [0.0, 0.0, 0.0]
     type: cf21
     reference_frame: "world"
 
   cf2:
     enabled: true
     uri: radio://0/80/2M/E7E7E7E702
-    initial_position: [2.5, 3.5, 0.0]
+    initial_position: [1.0, 0.0, 0.0]
     type: cf21
     reference_frame: "world"
 
   cf3:
     enabled: true
     uri: radio://0/80/2M/E7E7E7E703
-    initial_position: [3.0, 5.0, 0.0]
+    initial_position: [2.0, 0.0, 0.0]
     type: cf21
     reference_frame: "world"
 
   cf4:
     enabled: true
     uri: radio://0/80/2M/E7E7E7E704
-    initial_position: [9.5, 0.5, 0.0]
+    initial_position: [3.0, 0.0, 0.0]
     type: cf21
     reference_frame: "world"
 
