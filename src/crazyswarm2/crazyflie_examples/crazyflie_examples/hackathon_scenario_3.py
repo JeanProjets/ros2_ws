@@ -98,14 +98,13 @@ class MobileTarget:
             self.center + np.array([-pattern_size, pattern_size, 0]),   # Top-left
         ]
 
-    def start_patrol(self, timeHelper):
+    def start_patrol(self):
         """Start autonomous patrol movement"""
         if not self.moving:
             self.moving = True
             self.stop_flag.clear()
             self.movement_thread = threading.Thread(
                 target=self._patrol_loop,
-                args=(timeHelper,),
                 daemon=True
             )
             self.movement_thread.start()
@@ -117,7 +116,7 @@ class MobileTarget:
         if self.movement_thread:
             self.movement_thread.join(timeout=2.0)
 
-    def _patrol_loop(self, timeHelper):
+    def _patrol_loop(self):
         """Continuous patrol loop - moves between waypoints"""
         while self.moving and not self.stop_flag.is_set():
             # Get next waypoint
@@ -127,8 +126,8 @@ class MobileTarget:
             self.drone_state.cf.goTo(target_wp, 0, 3.0)
             self.drone_state.update_position(target_wp)
 
-            # Wait for movement to complete
-            timeHelper.sleep(3.5)
+            # Wait for movement to complete (use time.sleep, not timeHelper in thread)
+            time.sleep(3.5)
 
             # Move to next waypoint
             self.current_waypoint_idx = (self.current_waypoint_idx + 1) % len(self.waypoints)
@@ -318,7 +317,7 @@ class ScenarioCoordinator(Node):
         # Start mobile target patrol
         if self.mobile_target:
             self.get_logger().info('Starting mobile target patrol pattern...')
-            self.mobile_target.start_patrol(self.timeHelper)
+            self.mobile_target.start_patrol()
             self.timeHelper.sleep(1.0)
 
         elapsed = time.time() - start_time
